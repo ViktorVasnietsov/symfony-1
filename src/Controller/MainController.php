@@ -12,9 +12,5 @@ class MainController
     {
         return new Response('Main Page');
 }
-    #[Route('/main/name')]
-    public function nameAction():Response
-    {
-        return new Response('Hello name');
-}
+
 }
