@@ -4,7 +4,7 @@ namespace App\Entity;
 
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-
+//use DateTime;
 #[ORM\Entity()]
 #[ORM\Table(name: 'url_codes')]
 
@@ -24,10 +24,19 @@ class UrlCodePair
     #[ORM\Column(type: Types::INTEGER)]
     private int $counter = 0;
 
+    #[ORM\Column(type: Types::DATETIME_MUTABLE,nullable: true)]
+    private \DateTime $createdAt;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE,nullable: true,updatable: true)]
+    private \DateTime $updatedAt;
+
     public function __construct(string $url, string $code)
     {
+
     $this->url=$url;
     $this->code=$code;
+    $this->setCreatedAt();
+    $this->setUpdatedAt();
     }
     /**
      * @return int
@@ -79,6 +88,32 @@ class UrlCodePair
     public function incrementCounter(): void
     {
         $this->counter++;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getCreatedAt(): \DateTime
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(): void
+    {
+        $this->createdAt = new \DateTime();
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getUpdatedAt():\DateTime
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(): void
+    {
+        $this->updatedAt = new \DateTime();
     }
 
 }

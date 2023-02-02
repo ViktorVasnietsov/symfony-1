@@ -1,0 +1,18 @@
+{%extends 'base.html.twig' %}
+
+{% block title %}Url statistic{% endblock %}
+
+{% block body %}
+
+<section>
+    <ul>
+        <li>Id: {{ url.id}}</li>
+        <li>Code: {{ url.code}}</li>
+        <li>Url: {{ url.url }}</li>
+        <li>Counter: {{ url.counter}}</li>
+        <li>Date of creation: {{ dateCreate|date("d M Y H:i")}}</li>
+        <li>Date of the last transition: {{ dateUpdate|date("d M Y H:i")}}</li>
+    </ul>
+</section>
+
+{% endblock %}

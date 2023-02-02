@@ -28,6 +28,7 @@ protected ObjectRepository $repository;
         try {
             $url = $this->getUrlByCode($code);
             $url->incrementCounter();
+            $url->setUpdatedAt();
             $this->save();
             return $url;
         }catch (\Throwable){

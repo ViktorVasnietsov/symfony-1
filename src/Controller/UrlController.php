@@ -28,11 +28,11 @@ class UrlController extends AbstractController
     {
 }
 
-#[Route('/encode', methods: ['POST'])]
+#[Route('/encode',name:'encode_url', methods: ['POST'])]
 public function urlEncode(Request $request):Response
 {
     $code = $this->encoder->encode($request->request->get('url'));
-    return new Response($code);
+    return $this->redirectToRoute('url_stats', ['code'=>$code]);
 }
 #[Route('/decode', methods: ['POST'])]
 public function urlDecode(Request $request):Response
@@ -52,15 +52,36 @@ public function redirectAction(string $code):Response
     }
     return $response;
 }
-#[Route('/stat/{code}', methods: ['GET'])]
+#[Route('/code/{code}/stat',name: 'url_stats', methods: ['GET'])]
     public function statisticUrl(string $code):Response
     {
+        $vars = [
+            'code'=>$code
+        ];
         try {
             $url = $this->urlService->getUrlByCode($code);
-            $response = new Response($url->getCounter());
+//            $counter = $url->getCounter();
+            $createdDate = $url->getCreatedAt();
+            $updatedDate = $url->getUpdatedAt();
+            $vars = $vars + [
+                    'url'=>$url,
+                    'dateCreate'=>$createdDate,
+                    'dateUpdate'=>$updatedDate
+                ];
+            $template = 'url_statistic.html.twig';
         }catch (\Throwable $e){
-            $response = new Response($e->getMessage(), 400);
+            $vars = $vars + [
+                'error'=>$e
+                ];
+            $template = 'error.html.twig';
         }
-        return $response;
+        return $this->render($template,$vars);
+}
+#[Route('/code/new ',name:'add_new_url', methods: ['GET'])]
+    public function addNewUrlByForm():Response
+    {
+        return $this->render('url_create.html.twig',[
+            'form_action'=> $this->generateUrl('encode_url')
+        ]);
 }
 }
