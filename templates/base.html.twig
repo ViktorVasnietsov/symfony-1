@@ -1,19 +1,108 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
-        {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
-        {% block stylesheets %}
-            {{ encore_entry_link_tags('app') }}
-        {% endblock %}
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %} | Скорочувач урлів{% endblock %}</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+    {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    {% block stylesheets %}
+        {{ encore_entry_link_tags('app') }}
+        <style>
+            #logo {
+                width: 50px;
+            }
+            .card {
+                max-width: 500px;
+            }
+            header {
+                display: block;
+            }
+            .bg-menu {
+                background: #000000;
+            }
+            .bg-content{
+                background: #bbbec0;
+            }
+            .bg{
+                margin-top: 100px;
+            }
+            .border {
+                height: 0px;
+                margin-top: 100px;
+            }
+            /*button {*/
+            /*    background: #ff8200 !important;*/
+            /*    color: white !important;*/
+            /*}*/
+            /*button:hover {*/
+            /*    background: #3d619a !important;*/
+            /*}*/
+            .short_form {
+                width: 400px;
+            }
+            .t{
+                color: white;
+                font-size: 20px;
+            }
+            .text-bg-dark {
+                color: #fff!important;
+                background-color: RGBA(33,37,41,var(--bs-bg-opacity,1))!important;
+            }
+            .p-3 {
+                padding: 1rem!important;
+            }
+            body{
+                background: #757272;
+            }
+            {% block add_stule %}{% endblock %}
+        </style>
+    {% endblock %}
 
-        {% block javascripts %}
-            {{ encore_entry_script_tags('app') }}
-        {% endblock %}
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-    </body>
+    {% block javascripts %}
+        {{ encore_entry_script_tags('app') }}
+    {% endblock %}
+</head>
+<body>
+{% block body %}
+    <header class="p-3 text-bg-dark">
+        <div class="container">
+            <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+                <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+                    <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"></use></svg>
+                </a>
+
+                <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+                    <li><a href="/" class="nav-link px-2 text-secondary">Home</a></li>
+                    <li><a href="/url/code/new" class="nav-link px-2 text-white">Url</a></li>
+                    <li><a href="/url/allStats" class="nav-link px-2 text-white">Statistic</a></li>
+                    <li><a href="/url/redirect" class="nav-link px-2 text-white">Redirect</a></li>
+                    <li><a href="#" class="nav-link px-2 text-white">About</a></li>
+                </ul>
+
+                <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
+                    <input type="search" class="form-control form-control-dark text-bg-dark" placeholder="Search..." aria-label="Search">
+                </form>
+
+                <div class="text-end">
+                    <button onclick="location.href='/login'" type="button" class="btn btn-outline-light me-2">Login</button>
+                    <button onclick="location.href='/register'" type="button" class="btn btn-warning">Sign-up</button>
+                    <div class="col-md-10 rigght">
+                        {% block header %}{% endblock %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+{#    <div class="border"></div>#}
+    <div class="container bg">
+        <div class="row">
+            <div class="col-md-2 bg-menu">{% block menu %}{% endblock %}</div>
+            <div class="col-md-10 bg-content">{% block content %}{% endblock %}</div>
+        </div>
+    </div>
+{% endblock %}
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</body>
 </html>

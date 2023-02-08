@@ -2,16 +2,18 @@
 
 {% block title %}Create new Code{% endblock %}
 
-{% block body %}
+{% block content %}
 
     <section>
         <form action="{{ form_action }}" method="post">
+            <div class="mb-3">
 
-            <lable>Url для скорочення: <label>
-                    <input type="text" name="url">
+            <lable class="form-label">Url для скорочення: <label>
+                    <input type="text" class="form-control" name="url">
                 </label>
+                <button type="submit" class="btn btn-warning">Зберегти</button>
             </lable>
-            <button type="submit">Зберегти</button>
+            </div>
         </form>
     </section>
 

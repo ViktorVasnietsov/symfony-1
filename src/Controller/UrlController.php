@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\UrlCodePair;
+use App\Entity\User;
 use App\Services\AbstractEntityService;
 use App\Services\UrlService;
 use App\Shortener\Interfaces\IUrlDecoder;
@@ -41,16 +42,33 @@ public function urlDecode(Request $request):Response
     return new Response($code);
 }
 
-#[Route('/{code}', methods: ['GET'])]
-public function redirectAction(string $code):Response
+#[Route('/code',name: 'redirection', methods: ['POST'])]
+public function redirectAction(Request $request):Response
 {
     try{
-        $url = $this->urlService->getUrlByCodeAndIncrement($code);
+        $url = $this->urlService->getUrlByCodeAndIncrement($request->request->get('code'));
         $response = new RedirectResponse($url->getUrl());
     }catch (\Throwable $e){
         $response = new Response($e->getMessage(), 400);
     }
     return $response;
+}
+
+#[Route('/allStats', methods: ['GET'])]
+public function allStats():Response
+{
+    $stat =  $this->urlService->getStats();
+    return $this->render('url_all_stat.html.twig',[
+        'stat' => $stat,
+    ]);
+}
+
+#[Route('/redirect', methods: ['GET'])]
+public function redirectByCode():Response
+{
+    return $this->render('code_redirect.html.twig',[
+        'form_action'=>$this->generateUrl('redirection')
+    ]);
 }
 #[Route('/code/{code}/stat',name: 'url_stats', methods: ['GET'])]
     public function statisticUrl(string $code):Response

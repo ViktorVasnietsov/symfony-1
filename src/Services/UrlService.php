@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Entity\UrlCodePair;
+use App\Entity\User;
 use App\Shortener\Exceptions\DataNotFoundException;
 use Doctrine\Persistence\ObjectRepository;
 
@@ -43,5 +44,16 @@ protected ObjectRepository $repository;
         }catch (\Throwable){
             throw new DataNotFoundException('Url not found by code');
         }
+    }
+
+    public function getStats(?User $user = null)
+    {
+        try {
+            return $this->repository->findAll();
+        }catch (\Throwable){
+            throw new DataNotFoundException('Url not found by code');
+        }
+
+
     }
 }

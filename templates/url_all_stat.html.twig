@@ -1,0 +1,23 @@
+{%extends 'base.html.twig' %}
+
+{% block title %}Url statistic{% endblock %}
+
+{% block content %}
+
+    <section>
+        <ul>
+            {% for stats in stat %}
+            <li>
+                <ul>
+                    <li>Id: {{ stats.id}}</li>
+                    <li>Code: {{ stats.code}}</li>
+                    <li>Url: {{ stats.url }}</li>
+                    <li>Counter: {{ stats.counter}}</li>
+{#                    <li>Date of creation: {{ stats.dateCreate|date("d M Y H:i")}}</li>#}
+{#                    <li>Date of the last transition: {{ stats.dateUpdate|date("d M Y H:i")}}</li>#}
+                </ul>
+            </li>
+            {% endfor %}
+        </ul>
+    </section>
+{% endblock %}

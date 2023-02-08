@@ -1,0 +1,20 @@
+{%extends 'base.html.twig' %}
+
+{% block title %}Redirect by Code{% endblock %}
+
+{% block content %}
+
+    <section>
+        <form action="{{ form_action }}" method="post">
+            <div class="mb-3">
+
+                <lable class="form-label">Код для переходу: <label>
+                        <input type="text" class="form-control" name="code">
+                    </label>
+                    <button type="submit" class="btn btn-warning">Перейти</button>
+                </lable>
+            </div>
+        </form>
+    </section>
+
+{% endblock %}
