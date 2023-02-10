@@ -53,7 +53,5 @@ protected ObjectRepository $repository;
         }catch (\Throwable){
             throw new DataNotFoundException('Url not found by code');
         }
-
-
     }
 }
