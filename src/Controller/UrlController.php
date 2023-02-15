@@ -54,10 +54,10 @@ public function redirectAction(Request $request):Response
     return $response;
 }
 
-#[Route('/allStats', methods: ['GET'])]
+#[Route('/allStats',name: 'all_stats', methods: ['GET'])]
 public function allStats():Response
 {
-    $stat =  $this->urlService->getStats();
+    $stat =  $this->urlService->getStatsByUser($this->getUser());
     return $this->render('url_all_stat.html.twig',[
         'stat' => $stat,
     ]);

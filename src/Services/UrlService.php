@@ -6,6 +6,7 @@ use App\Entity\UrlCodePair;
 use App\Entity\User;
 use App\Shortener\Exceptions\DataNotFoundException;
 use Doctrine\Persistence\ObjectRepository;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class UrlService extends AbstractEntityService
 {
@@ -46,10 +47,10 @@ protected ObjectRepository $repository;
         }
     }
 
-    public function getStats(?User $user = null)
+    public function getStatsByUser(?UserInterface $user = null)
     {
         try {
-            return $this->repository->findAll();
+            return $this->repository->findBy(['user'=>$user]);
         }catch (\Throwable){
             throw new DataNotFoundException('Url not found by code');
         }

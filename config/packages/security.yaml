@@ -8,18 +8,26 @@ security:
             entity:
                 class: App\Entity\User
                 property: email
-        users_in_memory: { memory: null }
+#        users_in_memory: { memory: null }
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
             lazy: true
-            provider: users_in_memory
+#            provider: users_in_memory
+            provider: app_user_provider
             form_login:
                 # "app_login" is the name of the route created previously
                 login_path: app_login
                 check_path: app_login
+                default_target_path: all_stats
+                enable_csrf: true
+            json_login:
+                # api_login is a route we will create below
+                check_path: api_login
+            logout:
+                path: app_logout
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall
@@ -30,7 +38,8 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
+         - { path: ^/url, roles: ROLE_USER }
+#         - { path: ^/url/allStats, roles: ROLE_USER }
         # - { path: ^/profile, roles: ROLE_USER }
 
 when@test:

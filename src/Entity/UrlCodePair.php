@@ -30,14 +30,27 @@ class UrlCodePair
     #[ORM\Column(type: Types::DATETIME_MUTABLE,nullable: true,updatable: true)]
     private \DateTime $updatedAt;
 
-    public function __construct(string $url, string $code)
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'urls')]
+    #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id')]
+    private User $user;
+    public function __construct(string $url, string $code, User $user)
     {
-
-    $this->url=$url;
-    $this->code=$code;
+    $this->user = $user;
+    $this->url = $url;
+    $this->code = $code;
     $this->setCreatedAt();
     $this->setUpdatedAt();
     }
+
+    /**
+     * @return User
+     */
+    public function getUser(): User
+    {
+        return $this->user;
+    }
+
+
     /**
      * @return int
      */

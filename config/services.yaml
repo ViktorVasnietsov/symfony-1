@@ -38,3 +38,7 @@ services:
         arguments:
             $urlService: '@App\Services\UrlService'
         public: true
+
+#    App\Controller\RegistrationController:
+#        arguments:
+#            $authenticator: '@security.authenticator.form_login.main'

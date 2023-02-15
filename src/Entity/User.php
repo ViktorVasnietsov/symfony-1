@@ -42,13 +42,26 @@ private int $status = 0;
 #[ORM\OneToMany(mappedBy: 'user',targetEntity: Phone::class,fetch: 'LAZY')]
 private Collection $phones;
 
+#[ORM\OneToMany(mappedBy: 'url',targetEntity: UrlCodePair::class)]
+private Collection $urls;
+
     public function __construct(string $login= '', string $password = '', int $status = self::STATUS_DISABLED)
     {
         $this->login = $login;
         $this->password = $password;
         $this->status = $status;
         $this->phones = new ArrayCollection();
+        $this->urls = new ArrayCollection();
 }
+
+    /**
+     * @return Collection
+     */
+    public function getUrls(): Collection
+    {
+        return $this->urls;
+    }
+
     public function getEmail(): ?string
     {
         return $this->email;

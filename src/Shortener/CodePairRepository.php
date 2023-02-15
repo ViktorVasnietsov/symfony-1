@@ -9,13 +9,14 @@ use App\Shortener\ValueObjects\UrlCodePair as UrlCodePairVO;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Persistence\ObjectRepository;
+use Symfony\Bundle\SecurityBundle\Security;
 
 class CodePairRepository implements ICodeRepository
 {
     protected ObjectRepository $cpRepository;
     protected ObjectManager $em;
 
-    public function __construct(protected ManagerRegistry $doctrine)
+    public function __construct(protected ManagerRegistry $doctrine, protected Security $security)
     {
         $this->em = $this->doctrine->getManager();
         $this->cpRepository = $this->doctrine->getRepository(UrlCodePair::class);
@@ -23,8 +24,9 @@ class CodePairRepository implements ICodeRepository
     public function saveEntity(UrlCodePairVO $urlCodePairVO): bool
     {
         try {
+            $user = $this->security->getUser();
             $result = true;
-            $codePair = new UrlCodePair($urlCodePairVO->getUrl(), $urlCodePairVO->getCode());
+            $codePair = new UrlCodePair($urlCodePairVO->getUrl(), $urlCodePairVO->getCode(), $user);
             $this->em->persist($codePair);
             $this->em->flush();
         }catch (\Throwable){
